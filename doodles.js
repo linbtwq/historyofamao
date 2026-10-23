@@ -1,4 +1,4 @@
-// Каракули Амао: рисуются «от руки» (stroke-dash) + дрожащий фильтр #rough
+// каракули Амао рисуются «от руки» (stroke-dash) + дрожащий фильтр #rough
 const C={y:'#f2b705',r:'#d62839',b:'#3a86ff',g:'#2a9d4f',o:'#f77f00',p:'#ef5da8',n:'#8d5a2b',k:'#555',w:'#ddd5c4',R:'#c1121f',v:'#8e44ad'};
 const P=(d,c,f,w)=>`<path d="${d}" stroke="${c}" pathLength="1"${f?` fill="${f}"`:''}${w?` stroke-width="${w}"`:''}/>`;
 const O=(x,y,r,c,f,w)=>P(`M${x-r} ${y}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`,c,f,w);
@@ -32,7 +32,7 @@ const ART={s6:['granny','heart','cookie','flower','sun'],s8:['house','bunny','ca
 const wax=n=>D[n]()+`<g transform="translate(1.2 .9)" opacity=".45" stroke-width="2">${D[n]()}</g>`;
 const svg=n=>`<svg viewBox="0 0 100 100" class="d ${DK.includes(n)?'dk':'lt'}" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5">${wax(n)}</svg>`;
 
-// сцены-баннеры: [рисунок, ширина px, left %, bottom px]
+// сцены-баннеры [рисунок, ширина px, left %, bottom px]
 const SC={s3:[['house',150,8,0],['sun',110,70,60],['cloud',100,40,70]],s4:[['cloud',100,15,70],['house',130,60,0],['flower',70,35,0]],s5:[['star',70,12,70],['cloud',110,70,60],['house',120,40,0]],
 s6:[['granny',150,12,0],['cookie',70,48,0],['heart',80,68,50],['flower',80,82,0],['sun',90,35,60]],s7:[['cloud',110,20,70],['heart',70,50,40],['house',130,70,0]],
 s8:[['sun',100,6,60],['cow',130,60,0],['bunny',90,30,0],['bunny',70,44,0],['carrot',60,20,0],['flower',60,88,0]],
@@ -54,3 +54,8 @@ LT.push('strawb','strawb');DK.push('badberry');
 const MO=['berry','moon','star','bolt','smile','spark'];
 SC.s12=[['moon',110,8,70],['berry',120,45,0],['bolt',80,78,50]];
 SC.s13=[['smile',110,8,0],['star',80,35,70],['berry',120,60,0],['spark',70,88,60]];
+/* --- рисунки для глав (раньше их не было, и книга падала с ошибкой) --- */
+Object.assign(D,{
+needle:()=>P('M26 92L74 14',C.k,'',3)+O(75,17,3,C.k)+P('M76 20C98 34 58 48 78 62C94 74 66 84 58 80',C.r,'',3)+P('M20 70C30 60 40 66 46 56',C.r,'',2),
+cleaver:()=>P('M14 34H68L74 66H14Z',C.k)+O(28,48,4,C.k)+P('M68 44H92V54H68',C.n)+P('M20 66V74',C.R,'',3)
+});

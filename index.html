@@ -1,14 +1,31 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Дневник Амао</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Caveat:wght@400;500;700&family=Pangolin&family=Neucha&family=Cutive+Mono&family=Marck+Script&family=Comfortaa:wght@500;700&family=Nunito:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<noscript><style>.rv,.d path{opacity:1!important;transform:none!important;stroke-dashoffset:0!important}</style></noscript></head>
+</head>
 <body>
 <svg width="0" height="0" style="position:absolute"><filter id="rough"><feTurbulence baseFrequency=".035" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2" result="d"/><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="g"/><feColorMatrix in="g" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.4 -.7" result="a"/><feComposite in="d" in2="a" operator="in"/></filter></svg>
-<div id="bar"></div><div id="vig"></div><div id="cut"></div>
+<div id="vig"></div><div id="cut"></div>
 <svg id="slash" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M-5 105L105 -5" stroke="#c94a3f" stroke-width="2.2" pathLength="1"/></svg>
-<div id="app"></div>
+<div id="cover" class="cover"><div class="label"><small>Дневник</small><h1>Амао</h1><div class="nick">🍓 клубничка</div><button class="lock" aria-label="открыть дневник"><svg viewBox="0 0 60 70"><path class="sh" d="M16 32V22a14 14 0 0 1 28 0v10" fill="none" stroke="#d9b45a" stroke-width="6" stroke-linecap="round"/><rect x="8" y="30" width="44" height="34" rx="6" fill="#b8862f" stroke="#6b4a12" stroke-width="2"/><circle cx="30" cy="44" r="5" fill="#2a1604"/><rect x="28" y="46" width="4" height="10" rx="2" fill="#2a1604"/></svg></button></div></div>
+<div id="app">
+  <div class="book-stage">
+    <div class="book" id="book"></div>
+  </div>
+  <nav class="book-nav">
+    <button class="tool t-set" aria-label="шрифт и размер текста">Аа</button>
+    <button class="tool t-pen" aria-label="рисовать на странице">✎</button>
+    <button class="nav prev" aria-label="назад">‹</button>
+    <span class="pos"><b>1</b> / <i>1</i></span>
+    <button class="nav next" aria-label="вперёд">›</button>
+    <button class="tool t-bm" aria-label="закладка">🔖</button>
+  </nav>
+</div>
 <script src="data.js"></script><script src="doodles.js"></script><script src="script.js"></script>
 </body></html>
