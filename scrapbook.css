@@ -1,0 +1,78 @@
+/* Cloth, washi and cut paper share the two books' colour palette. */
+#desk,#reading,#reading.manuscript {
+ --cloth:repeating-linear-gradient(90deg,#f7cbd333 0 13px,transparent 13px 26px),repeating-linear-gradient(0deg,#cdaab438 0 13px,transparent 13px 26px);
+ background:var(--grain),linear-gradient(118deg,#fff9 0%,transparent 44%,#99818445 100%),var(--cloth),#ede2d7;
+}
+#desk {color:#693d4b;isolation:isolate;overflow:auto}
+#desk::after{content:'';z-index:-1;position:absolute;width:42vw;height:110%;right:-13vw;top:-4%;background:repeating-linear-gradient(90deg,transparent 0 80px,#6d534d14 85px 99px);transform:skewX(-24deg);filter:blur(7px)}
+#desk .desk-caption {position:relative;text-shadow:none;padding:5px 32px 11px;background:#fff8e6;box-shadow:1px 4px 6px #6e4d5428;font:500 clamp(38px,4.5vw,68px)/1.1 'Caveat',Georgia,serif;transform:rotate(-3deg);margin-bottom:clamp(32px,6vh,60px)}
+.desk-caption::before,.note-label::before,.part-intro::after,.berry-branches::before {content:'';position:absolute;top:-9px;left:32%;width:38%;height:19px;transform:rotate(3deg);background:repeating-linear-gradient(55deg,#cdd1e1bc 0 5px,#eff0e4bd 5px 9px);box-shadow:0 1px 0 #0001}
+#desk .volumes{position:relative;max-width:1000px;gap:clamp(42px,7vw,110px)}
+.volume {border-color:#baa3a0}
+#desk .diary-cover {color:#773e4a;background:radial-gradient(ellipse at 24% 14%,#fff8,transparent 50%),repeating-linear-gradient(90deg,#c5718355 0 13px,transparent 13px 26px),repeating-linear-gradient(0deg,#cc748055 0 13px,transparent 13px 26px),#f6c5c6}
+#desk .cover-frame {background:var(--grain),#fff7e5;inset:13% 9% 16% 12%;outline:1px dashed #cc9497;outline-offset:-7px;border:3px double #bf8890;border-radius:46% 46% 13% 13%;box-shadow:2px 4px 0 #9b77714a}
+.cover-sketch img,.house-sketch img,.diecut {width:100%;height:auto;filter:drop-shadow(2px 0 0 white) drop-shadow(-2px 0 0 white) drop-shadow(0 3px 0 white) drop-shadow(0 3px 2px #634f4b50)}
+.diary-cover .cover-frame::before {content:'';position:absolute;top:-12%;width:35%;aspect-ratio:1;background:url(art/stickers/ribbon.svg) center/contain no-repeat;filter:drop-shadow(0 2px 0 #fff);transform:rotate(-9deg)}
+#desk .notes-cover {background:var(--grain),radial-gradient(#f9fafc9c 1px,transparent 2px) 0 0/12px 12px,#a4b5d2}
+#desk .note-label {background:repeating-linear-gradient(0deg,transparent 0 20px,#869ab430 20px 21px),#fbf4df;color:#47475f;top:18%}
+.note-label strong{color:#414663}
+#desk .house-sketch{width:25%;bottom:9%;right:12%;opacity:1}
+.notes-cover::after{content:'';position:absolute;width:27%;bottom:8%;left:14%;aspect-ratio:1;background:url(art/stickers/moon.svg) center/contain no-repeat;transform:rotate(-17deg);filter:drop-shadow(2px 2px white)}
+.pen-prop,.tape-roll {position:absolute;pointer-events:none}
+.pen-prop{width:14px;height:72%;border-radius:6px;bottom:-5%;left:5%;background:linear-gradient(90deg,#a87981,#fce6e5 35%,#d4a7b4 76%,#936f82);box-shadow:4px 5px 5px #70564b45;transform:rotate(-17deg)}
+.pen-prop::after{content:'';position:absolute;bottom:-16px;inset-inline:0;height:18px;background:#887c80;clip-path:polygon(0 0,100% 0,50% 100%)}
+.tape-roll{width:65px;height:54px;border:12px solid #aaa9cf;border-radius:50%;box-shadow:inset 0 4px 2px #887f72,0 6px 0 #8883ac,2px 10px 6px #6a53664a;right:1%;top:-20px;transform:rotate(-18deg)}
+#reading {--accent:#8e485e;--edge:#d8bfc3;--paper:#fff8ed;--ink:#42383b;color:var(--ink)}
+#reading.manuscript{--accent:#59537e;--edge:#c3c1d4;--ink:#383645;color:var(--ink)}
+.reader-bar,.manuscript .reader-bar {color:#604859;background:#f9f1e9f7;border-bottom:1px solid #ddced0}
+.album-tabs {display:flex;justify-content:center;gap:6px;margin:25px auto -3px;padding:0 16px;position:relative;z-index:2}
+.album-tabs button {cursor:pointer;font:600 18px/1.2 'Caveat',Georgia,serif;color:#684051;min-width:88px;padding:9px 15px 10px;border:1px solid #c599aa;border-radius:9px 9px 0 0;background:#f3cbd4;box-shadow:inset 0 0 0 3px #fff4;transform:rotate(-1deg)}
+.album-tabs button:nth-child(even){background:#dddbee;border-color:#b6b2cb;color:#4f4d6c;transform:rotate(1deg)}
+.reading-layout{position:relative;display:flex;flex-direction:column;gap:0;max-width:970px;margin:0 auto 64px;padding:0 0 48px;border:9px solid #d6a2b1;border-left-width:17px;border-radius:10px;background:var(--grain),radial-gradient(#cdbfaf69 .8px,transparent 1px) 0 0/13px 13px,#fff9eb;box-shadow:3px 4px #d8ccb6,6px 8px #baa89a,8px 15px 25px #67555a3b}
+.manuscript .reading-layout{border-color:#adb4cd}
+.reading-layout aside,.manuscript .reading-layout aside{border:0;border-bottom:1px dashed var(--edge);position:sticky;top:55px;align-self:stretch;max-height:55vh;display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:8px 5% 8px 8%;background:#fbf4e9fa;z-index:5}
+.contents{flex:1}.contents summary{font:600 21px/1.3 'Caveat',Georgia,serif;padding:0}.contents nav{grid-template-columns:repeat(2,minmax(0,1fr))}
+.sheets-link{border:0;margin:0;padding:0}
+.reading-layout article{position:relative;margin:0;padding:0 7% 0 10%}
+.binding{position:absolute;pointer-events:none;top:60px;left:-21px;width:60px;display:grid;gap:clamp(65px,13vh,135px)}
+.binding i{position:relative;height:11px;border-radius:7px;background:linear-gradient(#a18e85,#fff3d7 28%,#cabbac 53%,#937e7a);box-shadow:1px 2px 2px #5d4c4d66}
+.binding i::after{content:'';position:absolute;z-index:-1;right:-3px;top:-4px;width:17px;height:19px;border-radius:50%;background:#847775}
+.part-intro {position:relative;padding:30px 32% 26px 0;border-bottom:1px dashed var(--edge);min-height:155px}
+.part-intro h2 {font:500 clamp(40px,5vw,73px)/1.03 'EB Garamond',Georgia,serif;letter-spacing:-.045em}
+.part-intro i{display:none}
+.part-intro::before{content:'';position:absolute;right:3%;top:18px;width:22%;height:85%;transform:rotate(6deg);background:url(art/stickers/strawberry.svg) center/65% 65% no-repeat,repeating-linear-gradient(0deg,transparent 0 15px,#d7a2ae44 16px 17px),#f7dbde;border:8px solid #fffaf0;box-shadow:1px 4px 6px #8f777748}
+.manuscript .part-intro::before {background:url(art/stickers/key.svg) center/65% 65% no-repeat,repeating-linear-gradient(90deg,#ffffff44 0 8px,transparent 8px 16px),#ddddef}
+.part-intro::after{top:16px;left:auto;right:8%;width:13%;transform:rotate(11deg)}
+.entry{padding:1.3em 0 .5em;scroll-margin-top:123px}
+.entry>header{position:relative;padding-right:65px}
+.entry-mark{position:absolute;right:0;top:0;width:48px;transform:rotate(8deg)}
+.entry header h3{font:500 clamp(31px,3.5vw,52px)/1.16 'EB Garamond',Georgia,serif;color:var(--accent)}
+.entry p{line-height:1.56}
+.entry .rubric{display:inline-block;background:#e4dfef;padding:.2em .8em;transform:rotate(-2deg)}
+.entry .date {font-size:1.15em}
+.entry .stage,.entry .annotation{font:500 1.1em/1.3 'Caveat',Georgia,serif;background:#efeaf3;border:0;padding:.5em 1em}
+.entry .quote,.entry blockquote,.entry .q{margin:1.3em 4%;padding:.75em 1em;border:0;border-bottom:1px dashed #c4a8af;background:#f6e4df;font:500 1.3em/1.3 'Caveat',Georgia,serif;transform:rotate(-.6deg)}
+.berry-branches{position:relative;margin:1.6em 1% 1.4em;padding:22px;background:var(--grain),#f5dfe3;box-shadow:2px 3px 0 #c7b4ad}
+.berry-branches header{display:flex;align-items:center;gap:12px}.berry-branches .diecut{width:48px}.berry-branches h4{margin:0;font:600 32px 'Caveat',Georgia,serif}
+.berry-branches details{background:#fff7f0;margin-top:6px;padding:8px 12px;font-size:.92em}.berry-branches summary{cursor:pointer;color:#653d50}.berry-branches details p{margin:.5em 0;color:#444}
+#reading .scene-page{display:flex;flex-direction:column;height:auto}.entry:focus{outline:none}
+@media(max-width:799px){
+ .reading-layout{margin-inline:9px;padding:0 0 24px;border-width:5px;border-left-width:9px}
+ .reading-layout article{padding:0 5% 0 7%}
+ .binding{width:20px;left:-11px}.binding i{height:6px}.binding i::after{height:12px;width:11px}
+ .part-intro{min-height:125px;padding-top:24px}.part-intro::before{border-width:4px}
+ .album-tabs{gap:3px;margin-top:17px}.album-tabs button{min-width:0;padding:7px 12px}
+ .contents nav{grid-template-columns:1fr}.entry-mark{width:36px}
+ .tape-roll{width:42px;height:38px;border-width:8px;right:7%}
+ .desk-caption::before{height:13px}
+}
+@media(max-width:500px) and (min-height:650px){.pen-prop{height:36%;left:13%;bottom:7%}.tape-roll{right:9%;top:15%}}
+.keepsakes{display:flex;justify-content:flex-start;align-items:center;gap:clamp(10px,4vw,50px);margin:21px 0 9px;padding:14px 4% 17px;background:repeating-linear-gradient(0deg,transparent 0 19px,#cec0b43d 19px 20px),linear-gradient(110deg,#efe1d3,#faf1db);border-bottom:1px dashed #baaa99;transform:rotate(-.45deg)}
+.keepsakes a{flex:1;position:relative;display:flex;align-items:center;justify-content:center;gap:.4em;color:#694857;font:500 clamp(18px,1.8vw,26px)/1.1 'Caveat',Georgia,serif;text-decoration:none}
+.keepsakes img{max-width:44px;max-height:48px;transform:rotate(-8deg)}
+.keepsakes a:nth-child(2) img{transform:rotate(9deg)}
+.keepsakes a:hover span,.keepsakes a:focus-visible span{text-decoration:underline}
+.reading-layout [id]{scroll-margin-top:114px}
+.manuscript .part-intro{border-color:#acadc3}
+.part-intro:has(i .dk)::before{background-image:url(art/stickers/moon.svg)}
+@media(max-width:600px){.keepsakes{margin:16px -1% 5px;gap:6px;padding:13px 2px}.keepsakes a{flex-direction:column;font-size:17px;text-align:center}.keepsakes img{width:30px;height:32px}}

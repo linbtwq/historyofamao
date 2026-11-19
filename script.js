@@ -1,3 +1,6 @@
+const isNotebook = new URLSearchParams(location.search).get('book') === 'notes';
+const volumeData = isNotebook ? NOTES : DATA;
+const volumeKey = isNotebook ? 'amao.notes' : 'amao';
 const $ = (s, r = document) => [...r.querySelectorAll(s)], B = document.body;
 const E = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 const SX = /(^|[^а-яё])(ненавид[а-яё]*|ненавист[а-яё]*|избива[а-яё]*|избиени[а-яё]*|блева[а-яё]*|рвот[а-яё]*)/gi;
@@ -36,113 +39,141 @@ function renderBlock(block, chapter, first) {
 }
 
 /* ---------- интерактивная сцена с кроликом ---------- */
-const sp = (d, a = '') => `<path d="${d}" pathLength="1" ${a}/>`;
 function sceneSVG() {
-  const BR = '#8d5a2b', RED = '#c1121f', SK = '#e8b894';
-  return `<svg viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-  <g stroke="${BR}" opacity=".85">
-    ${sp('M16 272H384')}
-    ${sp('M36 74H132')}${sp('M48 74V52H70V74')}${sp('M86 74V44H112V74')}${sp('M118 74V60H130V74')}
-    ${sp('M160 20V128')}${sp('M142 128H178')}${sp('M142 128V142M151 128V142M160 128V142M169 128V142M178 128V142')}
-  </g>
-  <g stroke="${BR}" stroke-width="4">
-    ${sp('M84 190H292')}${sp('M84 190V199H292V190')}${sp('M96 199V272')}${sp('M280 199V272')}
-  </g>
-  <g class="boy">
-    <circle cx="50" cy="168" r="14" stroke="currentColor"/>
-    <circle cx="45" cy="166" r="3" fill="currentColor" stroke="none"/><circle cx="56" cy="166" r="3" fill="currentColor" stroke="none"/>
-    ${sp('M46 176Q50 180 54 176')}
-    ${sp('M50 182V236')}${sp('M50 194L38 224')}${sp('M50 194L62 224')}${sp('M50 236L42 272')}${sp('M50 236L58 272')}
-  </g>
-  <g class="kb">
-    ${sp('M168 188C160 164 184 152 214 158C240 154 258 172 250 188Z', 'fill="#8d8d8d22" stroke="#555"')}
-    <circle cx="170" cy="168" r="14" stroke="#555"/>
-    ${sp('M162 156C154 124 168 118 172 152', 'stroke="#555"')}${sp('M176 152C184 120 198 122 184 156', 'stroke="#555"')}
-    <circle cx="166" cy="166" r="2.6" fill="#555" stroke="none"/><circle cx="159" cy="172" r="2" fill="${RED}" stroke="none"/>
-    <circle cx="254" cy="176" r="6" stroke="#555"/>
-  </g>
-  <g class="kd">
-    ${sp('M162 190C166 170 236 168 256 190Z', 'fill="#ddd5c455" stroke="#777"')}
-    <circle cx="160" cy="184" r="11" stroke="#777"/>
-    ${sp('M152 178C132 172 126 180 138 186', 'stroke="#777"')}
-    ${sp('M155 179l6 6M161 179l-6 6', `stroke="${RED}"`)}
-    ${sp('M236 190L254 202', 'stroke="#777"')}
-    ${sp('M140 194C164 210 252 210 276 194', `stroke="${RED}" stroke-width="6"`)}
-    ${sp('M268 198V208', `stroke="${RED}" stroke-width="4"`)}
-  </g>
-  <g class="father">
-    ${sp('M302 108Q332 96 360 108L368 272H296Z', 'stroke="#555" fill="#3a86ff22"')}
-    ${sp('M332 196V272', 'stroke="#555"')}
-    <circle cx="334" cy="64" r="22" stroke="#555"/>
-    <circle cx="324" cy="62" r="2.6" fill="#555" stroke="none"/>
-    ${sp('M318 76Q326 82 336 76', 'stroke="#555"')}
-  </g>
-  <g class="arm">
-    ${sp('M312 112L280 138', 'stroke="#3a86ff" stroke-width="10"')}
-    <circle cx="280" cy="138" r="6.5" fill="${SK}" stroke="#555" stroke-width="2"/>
-    ${sp('M280 138L266 148', `stroke="${BR}" stroke-width="7"`)}
-    ${sp('M268 144L262 156L240 160Z', 'fill="#e9edf2" stroke="#444" stroke-width="2.4"')}
-  </g>
-</svg>`;
+  // Рисуется вручную в SVG. Фигуры остаются раздельными, чтобы шаги
+  // существующей сцены управляли движением руки, кроликом и тенью.
+  return `<svg class="memory-drawing" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
+    <defs>
+      <linearGradient id="barnWall" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#687b72"/><stop offset=".56" stop-color="#4c6767"/><stop offset="1" stop-color="#293f4b"/></linearGradient>
+      <linearGradient id="windowLight" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff2bb"/><stop offset="1" stop-color="#dba870"/></linearGradient>
+      <linearGradient id="woodTop" x1="0" x2=".2" y1="0" y2="1"><stop stop-color="#b8946f"/><stop offset="1" stop-color="#87684f"/></linearGradient>
+      <linearGradient id="boyShirt" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f5e7d0"/><stop offset="1" stop-color="#b7c8b9"/></linearGradient>
+      <linearGradient id="manCoat" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#647373"/><stop offset="1" stop-color="#293c44"/></linearGradient>
+      <radialGradient id="memoryGlow"><stop stop-color="#f5dda1" stop-opacity=".44"/><stop offset="1" stop-color="#f5dda1" stop-opacity="0"/></radialGradient>
+      <pattern id="barnPlanks" width="87" height="440" patternUnits="userSpaceOnUse"><path d="M84 0V440M12 0V440" fill="none" stroke="#203d42" stroke-width="3" opacity=".22"/><path d="M80 15Q70 118 80 220T76 420M17 31Q25 120 19 190" fill="none" stroke="#f3dba9" stroke-width="1.3" opacity=".08"/></pattern>
+    </defs>
+    <!-- Тесный сарай: доски, окно, инструменты, свет в пыли. -->
+    <rect width="800" height="450" fill="url(#barnWall)"/>
+    <rect width="800" height="450" fill="url(#barnPlanks)"/>
+    <path d="M0 10L800 8V37L0 45Z" fill="#354d4d" opacity=".8"/>
+    <path d="M0 42H800M26 0L45 450M762 0L742 450" stroke="#1f393d" stroke-width="11" opacity=".45"/>
+    <path d="M42 55H261V202H42Z" fill="#314d56" stroke="#3b302a" stroke-width="11"/>
+    <rect x="50" y="63" width="203" height="130" fill="url(#windowLight)"/>
+    <path d="M54 158Q110 120 154 147T249 130V193H54Z" fill="#91a791"/><path d="M54 181Q131 152 184 174T252 158V193H54Z" fill="#607d70"/>
+    <path d="M151 61V196M49 119H255" stroke="#564938" stroke-width="10"/>
+    <path d="M50 63L180 193H104L49 132Z" fill="#fff0be" opacity=".17"/>
+    <path d="M55 193L298 193L568 450H155Z" fill="#ffe8a2" opacity=".09"/>
+    <ellipse cx="172" cy="234" rx="300" ry="245" fill="url(#memoryGlow)"/>
+    <g fill="none" stroke="#394d4a" stroke-linecap="round">
+      <path d="M318 108H560M323 112V124M554 112V126" stroke-width="12"/>
+      <path d="M337 119H549" stroke="#b4a17d" stroke-width="8"/>
+      <path d="M373 123V187L362 203L379 211L389 197L378 187V123" stroke="#9e9c81" stroke-width="4"/>
+      <path d="M422 122V185Q402 198 415 214Q427 220 433 202L443 189V123" stroke="#9d9983" stroke-width="4"/>
+      <path d="M475 125L472 191L488 205L496 191L490 125" stroke="#aa9781" stroke-width="3"/>
+      <path d="M521 123V158M512 141H530M516 158L507 185M526 158L536 185" stroke="#bda988" stroke-width="3"/>
+    </g>
+    <g fill="#7b8171" stroke="#485852" stroke-width="2"><path d="M311 83H570L562 111H319Z"/><path d="M330 58H362V82H330Z"/><path d="M392 65H422V82H392Z"/><path d="M486 57H520V82H486Z"/></g>
+    <path d="M0 372Q257 354 454 370T800 359V450H0Z" fill="#4d504a"/>
+    <path d="M0 389H800M0 421H800" stroke="#d4b98d" stroke-opacity=".1" stroke-width="4"/>
+    <!-- Фигуры намеренно без внешности: ничего не навязываем канону. -->
+    <g class="boy" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M112 276Q77 285 68 318L57 415H222L217 315Q201 282 174 270Z" fill="#788a83" stroke="#3d5658" stroke-width="4"/>
+      <path d="M129 274L136 320L167 328L183 278" fill="#4f6969" opacity=".7"/>
+      <path d="M107 272L123 252L177 250L190 287Q162 309 126 288Z" fill="#586e6b"/>
+      <path d="M109 189Q115 144 148 143Q185 145 197 184L194 235Q183 267 154 272Q114 268 105 232Z" fill="#51696b" stroke="#29474c" stroke-width="4"/>
+      <path d="M106 194Q109 165 136 149Q163 142 185 168L185 207Q165 193 142 206Q126 211 106 203Z" fill="#344e55" opacity=".92"/>
+      <path d="M106 214Q114 255 146 266" fill="none" stroke="#b9c5a4" stroke-width="3" opacity=".45"/>
+      <path d="M85 314Q109 322 116 352L131 369M209 316Q194 326 189 359" fill="none" stroke="#a9bcab" stroke-width="3" opacity=".5"/>
+    </g>
+    <!-- Взрослый остаётся нечитаемой тёмной фигурой. -->
+    <g class="father" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M636 221Q661 203 714 214Q766 231 779 276L800 450H593L605 296Z" fill="#293b41" stroke="#182b33" stroke-width="4"/>
+      <path d="M666 228Q651 317 691 450M730 239L751 356" stroke="#7a908a" stroke-width="3" opacity=".23" fill="none"/>
+      <path d="M674 190L671 238Q697 244 721 223L718 186Z" fill="#30464b"/>
+      <path d="M651 132Q661 92 698 93Q743 94 748 147L735 184Q724 213 696 211Q653 202 647 168Z" fill="#273940" stroke="#1c3036" stroke-width="4"/>
+      <path d="M657 124Q676 91 709 104M649 160Q646 184 664 199" fill="none" stroke="#778b85" stroke-width="3" opacity=".34"/>
+      <path d="M643 222L671 236L640 289L605 283Z" fill="#354b50" stroke="#21343c" stroke-width="3"/>
+    </g>
+    <!-- Потёртый рабочий стол; предметы не висят в воздухе. -->
+    <path d="M156 297L579 286L642 324L123 332Z" fill="url(#woodTop)" stroke="#675140" stroke-width="5"/>
+    <path d="M125 330L642 323L641 344L125 353Z" fill="#6b5041" stroke="#513e37" stroke-width="3"/>
+    <path d="M179 351L177 450H202L212 350M564 345L581 450H610L601 343" fill="#624b3e" stroke="#4b3b35" stroke-width="3"/>
+    <path d="M183 307L533 300M227 320L585 314M145 338L621 335" stroke="#e6c7a0" stroke-opacity=".45" stroke-width="2"/>
+    <path d="M257 317L248 327M291 311L287 320M516 305L526 318M546 325L557 327" stroke="#5d4138" stroke-opacity=".6" stroke-width="2"/>
+    <g class="knife-rest" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M563 302L601 303" stroke="#4d403b" stroke-width="10"/>
+      <path d="M563 297L518 304L565 308Z" fill="#c3cec4" stroke="#6b7370" stroke-width="2"/>
+      <path d="M556 302L527 304" stroke="#fff7de" stroke-width="1.5"/>
+    </g>
+    <!-- Кролик: несколько мягких плоскостей цвета вместо палочек. -->
+    <g class="kb"><g class="rabbit-breath" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="425" cy="292" rx="83" ry="9" fill="#51453c" opacity=".3"/>
+      <path d="M387 250Q403 230 438 237Q476 237 487 264Q490 284 471 293H387Q357 287 362 270Z" fill="#f4ebd9" stroke="#817d76" stroke-width="2.8"/>
+      <path d="M420 239Q452 239 466 263" fill="none" stroke="#fffdf0" stroke-width="13" opacity=".7"/>
+      <circle cx="480" cy="271" r="14" fill="#e9dfcb"/><circle cx="372" cy="269" r="24" fill="#fff3e0" stroke="#817d76" stroke-width="2.8"/>
+      <path d="M358 253Q340 204 348 185Q360 176 371 209L380 250" fill="#f6efdf" stroke="#817d76" stroke-width="2.6"/>
+      <path d="M373 250Q378 197 391 193Q403 194 394 221L388 256" fill="#f6efdf" stroke="#817d76" stroke-width="2.6"/>
+      <path d="M357 244L350 196Q362 193 371 245M382 240L391 207" fill="#d9b6b1" opacity=".76"/>
+      <ellipse cx="366" cy="268" rx="3.5" ry="4.4" fill="#465052"/><circle cx="367" cy="266" r="1.1" fill="#fff"/>
+      <path d="M351 277L347 281L353 282M353 281Q360 285 365 282" fill="none" stroke="#b97d7e" stroke-width="1.7"/>
+      <path d="M352 281L330 279M352 283L331 286" stroke="#b1a49d" stroke-width="1.5"/>
+      <path d="M387 290Q400 295 409 287M447 291Q461 298 471 289" fill="#e9dfcc" stroke="#817d76" stroke-width="2"/>
+    </g></g>
+    <g class="kd" opacity="0" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="415" cy="295" rx="85" ry="8" fill="#252b30" opacity=".35"/>
+      <path d="M373 274Q398 255 433 261Q470 264 481 287Q477 296 457 296H374Q355 291 373 274Z" fill="#d5d2c6" stroke="#848583" stroke-width="2"/>
+      <path d="M371 277Q346 264 323 268Q313 275 343 284L364 285" fill="#d3d0c7" stroke="#868786" stroke-width="2"/>
+      <path d="M363 275Q343 251 330 247Q318 250 337 272" fill="#d9d6cd" stroke="#868786" stroke-width="2"/>
+      <path d="M352 277Q358 273 363 276" fill="none" stroke="#6c7070" stroke-width="2"/>
+      <path d="M460 293Q469 301 482 295" fill="none" stroke="#858581" stroke-width="2"/>
+    </g>
+    <!-- Кровь открывается только на последних шагах воспоминания. -->
+    <g class="blood-stain" opacity="0" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M339 301Q366 292 381 301Q400 292 424 300Q455 290 470 301Q488 299 505 312Q476 321 450 317Q426 327 410 317Q382 327 365 317Q350 319 339 309Z" fill="#982b3c" stroke="#692333" stroke-width="2"/>
+      <path d="M367 318Q378 319 381 327L383 349Q385 361 379 374Q371 365 373 349L370 331Z" fill="#962e3f"/>
+      <path d="M444 319Q453 319 458 330L455 367Q453 378 448 372L447 333Z" fill="#9f3041"/>
+      <path d="M489 314Q495 322 491 334L493 352Q489 365 484 353L483 329Z" fill="#7d2633"/>
+      <ellipse cx="323" cy="307" rx="7" ry="3" fill="#aa3443"/>
+      <ellipse cx="520" cy="321" rx="5" ry="3" fill="#9f3041"/>
+      <path d="M375 307Q420 299 464 307" fill="none" stroke="#df5662" stroke-opacity=".45" stroke-width="2"/>
+    </g>
+    <!-- Рука и нож движутся отдельно; сюжетные шаги не переписаны. -->
+    <g class="arm" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M637 250Q613 272 584 284L554 290" fill="none" stroke="#40585e" stroke-width="36"/>
+      <path d="M562 279Q549 279 546 289Q545 301 559 304L584 297L580 286Z" fill="#bc947d" stroke="#614d47" stroke-width="2"/>
+      <g class="knife-held">
+        <path d="M556 294L518 299" stroke="#5b4539" stroke-width="11"/>
+        <path d="M518 294L479 311L520 305Z" fill="#c2d0ca" stroke="#6a7270" stroke-width="2"/>
+        <path d="M510 301L492 308" stroke="#f8e8d4" stroke-width="1.8"/>
+      </g>
+    </g>
+    <path d="M32 403Q108 399 163 415M708 396Q749 382 796 391" fill="none" stroke="#e6d0a4" stroke-opacity=".19" stroke-width="4"/>
+  </svg>`;
 }
 
 function sceneHTML(b) {
   const caps = b.caps.map((t, i) =>
     `<p class="cap${/\{\{/.test(t) ? ' climax' : ''}" data-i="${i}">${em(t)}</p>`).join('');
   return `<div class="scene-page" data-kill="${b.kill}" data-step="-1" style="--q:.12">
-    <div class="scene-img">${sceneSVG()}<div class="scene-kill">нажми, чтобы читать дальше</div></div>
-    <div class="scene-caps">${caps}</div>
+    <div class="scene-img"><div class="farm-light"></div>${sceneSVG()}<div class="farm-shadow"></div><button class="scene-kill" type="button"><span>нажми, чтобы читать дальше</span></button></div>
+    <div class="scene-caps" aria-live="polite" aria-atomic="true">${caps}</div>
     <div class="scene-ctl"><button class="scene-next" type="button">дальше ›</button><span class="scene-step"></span></div>
   </div>`;
 }
 
-// темп сцены: сколько мс кнопка «дальше» остаётся заблокированной после показа реплики
-const holdFor = (i, kill, n) =>
-  i === kill - 2 ? 1800 :      // замах
-  i === kill - 1 ? 3200 :      // «Он просто замер…» — даём прожить момент
-  i === kill ? 2600 :          // удар
-  i === n - 1 ? 0 : 900;
-
-function sceneStep(sp_) {
-  if (sp_.dataset.lock === '1') return;
-  const caps = $('.cap', sp_), n = caps.length, kill = +sp_.dataset.kill;
-  let i = +sp_.dataset.step;
-  if (i >= n - 1) return;
-  i++;
-  sp_.dataset.step = i;
-  sp_.classList.add('running');
-  caps.forEach((c, j) => c.classList.toggle('on', j === i));
-
-  // рука: спокойно → берёт нож → замах
-  const q = i < kill - 3 ? .12 : i === kill - 3 ? .2 : 1;
-  sp_.style.setProperty('--q', q);
-  if (i >= kill - 2 && i < kill) B.classList.add('still');
-
-  if (i === kill) {
-    B.classList.remove('still');
-    setTimeout(() => {
-      sp_.classList.add('kill');
-      B.classList.add('jolt', 'cut');
-      setTimeout(() => B.classList.remove('jolt', 'cut'), 3000);
-      setTimeout(() => sp_.classList.add('done'), 900);
-    }, 500);
-  }
-
-  const btn = $('.scene-next', sp_)[0], step = $('.scene-step', sp_)[0];
-  step.textContent = `${i + 1} / ${n}`;
-  if (i >= n - 1) {
-    btn.textContent = 'конец сцены';
-    btn.disabled = true;
-    return;
-  }
-  const ms = holdFor(i, kill, n);
-  if (ms) {
-    sp_.dataset.lock = '1'; btn.disabled = true; btn.classList.add('wait');
-    setTimeout(() => { sp_.dataset.lock = '0'; btn.disabled = false; btn.classList.remove('wait'); }, ms);
-  }
-  btn.textContent = 'дальше ›';
+function sceneStep(container) {
+  const captions = $('.cap', container);
+  const kill = Number(container.dataset.kill);
+  const previous = Number(container.dataset.step);
+  const i = previous === captions.length - 1 ? 0 : previous + 1;
+  container.dataset.step = i;
+  container.classList.add('running');
+  container.dataset.phase = i < kill - 3 ? 'light' : i < kill - 1 ? 'shadow' : i === kill - 1 ? 'still' : 'after';
+  container.style.setProperty('--q', i < kill - 2 ? '.12' : '1');
+  captions.forEach((caption, index) => caption.classList.toggle('on', index === i));
+  $('.scene-step', container)[0].textContent = (i + 1) + ' / ' + captions.length;
+  $('.scene-next', container)[0].textContent = i === captions.length - 1 ? 'Прочитать ещё раз' : 'Дальше →';
 }
-
 /* ---------- секрет (спойлер-плашка) ---------- */
 const secretHTML = items => `<div class="secret">
   <h3>Секрет Амао</h3>
@@ -190,7 +221,7 @@ function paginateChapter(c) {
   const head = `<div class="chapter-head">
       <div class="chapter-num">Глава ${c.num}</div>
       <h2><span>${c.title}</span></h2>
-      <div class="chapter-orn">${c.mora ? '● ● ●' : '🍓 🍓 🍓'}</div>
+      <div class="chapter-orn">${isNotebook ? '✎' : c.mora ? '● ● ●' : '🍓 🍓 🍓'}</div>
     </div>`;
 
   const out = [];           // { html, scene? }
@@ -239,7 +270,7 @@ const renderTOC = start => `<div class="chapter-head">
     <div class="chapter-orn">✦</div>
   </div>
   <ol style="list-style:none;padding:0;margin-top:6px">
-  ${DATA.chapters.map(c => c.part
+  ${volumeData.chapters.map(c => c.part
     ? `<li style="margin:12px 0 4px;font:700 1.05rem 'Caveat',cursive;color:var(--hd);cursor:pointer" data-go="${c.id}">${c.part} · ${c.title}</li>`
     : `<li style="display:flex;align-items:baseline;gap:8px;margin:3px 0;font-size:.9rem;cursor:pointer;padding:4px 0" data-go="${c.id}"><span style="flex:1;border-bottom:1px dotted var(--line)">Глава ${c.num} · ${c.title}</span><b>${start[c.id] + 1}</b></li>`
   ).join('')}
@@ -250,7 +281,7 @@ const renderTL = () => `<div class="chapter-head">
     <h2><span>Мои даты</span></h2>
     <div class="chapter-orn">✦</div>
   </div>
-  ${DATA.timeline.map(([y, a, c]) => `
+  ${volumeData.timeline.map(([y, a, c]) => `
     <div style="display:flex;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px dotted var(--line);font-size:.9rem">
       <b style="font:700 1.2rem 'Caveat',cursive;color:var(--hd);min-width:2.7rem">${y}</b>
       <em style="font-style:italic;flex:1">${E(a)}</em>
@@ -273,8 +304,8 @@ let chapterStartPage = {};
 function buildPages() {
   const body = [];
   const start = {};
-  DATA.chapters.forEach(c => {
-    start[c.id] = body.length + 2; // +2: оглавление и хронология
+  volumeData.chapters.forEach(c => {
+    start[c.id] = body.length + (volumeData.timeline ? 2 : 1);
     if (c.part) {
       body.push({ content: renderPart(c), kind: 'part', chapter: c, theme: themeOf(c) });
       return;
@@ -290,7 +321,7 @@ function buildPages() {
   chapterStartPage = start;
   pages = [
     { content: renderTOC(start), kind: 'front', theme: themeOf(null) },
-    { content: renderTL(), kind: 'front', theme: themeOf(null) },
+    ...(volumeData.timeline ? [{ content: renderTL(), kind: 'front', theme: themeOf(null) }] : []),
     ...body
   ];
 }
@@ -424,29 +455,17 @@ document.addEventListener('keydown', e => {
 let tx = null;
 document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
 document.addEventListener('touchend', e => {
-  if (tx === null) return;
+  if (tx === null || !B.classList.contains('opened')) return;
   const dx = e.changedTouches[0].clientX - tx; tx = null;
   if (Math.abs(dx) > 60 && !B.classList.contains('pen') && !e.target.closest('.scene-page,.page-jump,.panel')) goto(cur + (dx < 0 ? 1 : -1));
 }, { passive: true });
-
-$('.lock')[0].addEventListener('click', function () {
-  this.classList.add('open');
-  setTimeout(async () => {
-    B.classList.add('opened');
-    if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (_) { } }
-    applyPrefs();
-    fit();
-    initBook(store.get('amao.pos', null));
-    if (cur > 1) toast('Книга открыта там, где чтение остановилось');
-  }, 400);
-});
 
 let sig = '', rz;
 window.addEventListener('resize', () => {
   fit();
   clearTimeout(rz);
   rz = setTimeout(() => {
-    if (!sheets.length) return;
+    if (!sheets.length || !B.classList.contains('opened')) return;
     const book = document.getElementById('book');
     const s = book.offsetWidth + 'x' + book.offsetHeight;
     if (sig && s !== sig) initBook(posOf(cur));
@@ -465,8 +484,8 @@ const store = {
 };
 const FS_STEPS = [.9, 1, 1.15, 1.3];
 let prefs = Object.assign({ fs: 1, font: 'hand' }, store.get('amao.prefs', {}));
-let bm = store.get('amao.bm', null);
-const inkData = store.get('amao.ink', {});
+let bm = store.get(volumeKey + '.bm', null);
+const inkData = store.get(volumeKey + '.ink', {});
 let inkColor = '#c1121f';
 
 const tSet = $('.t-set')[0], tPen = $('.t-pen')[0], tBm = $('.t-bm')[0];
@@ -489,7 +508,7 @@ function resolvePos(pos) {
 const bmIdx = () => (bm && pages.length ? resolvePos(bm) : -1);
 
 function persistUI() {
-  store.set('amao.pos', posOf(cur));
+  store.set(volumeKey + '.pos', posOf(cur));
   const bi = bmIdx();
   sheets.forEach((s, i) => s.classList.toggle('bm', i === bi));
   tBm.classList.toggle('on', bi === cur);
@@ -541,7 +560,7 @@ pSet.addEventListener('click', e => {
 tBm.onclick = () => {
   if (bm && bmIdx() === cur) { bm = null; toast('Закладка убрана'); }
   else { bm = posOf(cur); toast(`Закладка на странице ${cur + 1}`); }
-  store.set('amao.bm', bm); persistUI();
+  store.set(volumeKey + '.bm', bm); persistUI();
 };
 
 /* ---------- рисование на полях ---------- */
@@ -575,7 +594,7 @@ function attachInk(cv, i) {
   const end = () => {
     if (!st) return;
     const k = pageKey(i); (inkData[k] = inkData[k] || []).push(st); st = null;
-    store.set('amao.ink', inkData);
+    store.set(volumeKey + '.ink', inkData);
   };
   cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
 }
@@ -606,7 +625,7 @@ pPen.addEventListener('click', e => {
   const k = pageKey(cur);
   if (b.dataset.a === 'undo' && inkData[k]) inkData[k].pop();
   if (b.dataset.a === 'clear') inkData[k] = [];
-  store.set('amao.ink', inkData);
+  store.set(volumeKey + '.ink', inkData);
   const cv = sheets[cur].querySelector('canvas.ink'); if (cv) inkRedraw(cv, cur);
 });
 

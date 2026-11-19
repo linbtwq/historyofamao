@@ -1,0 +1,75 @@
+.scene-img {isolation:isolate;background:#e9ddc3;color:#4d4338}
+.scene-img svg {position:relative;z-index:1;filter:none;transition:transform 1.6s ease,opacity 1.3s ease}
+.farm-light,.farm-shadow {position:absolute;inset:0;pointer-events:none}
+.farm-light {background:linear-gradient(117deg,transparent 10%,#fff4cd 11% 30%,transparent 31% 34%,#fff1bd 35% 46%,transparent 47%)}
+.farm-shadow {z-index:2;background:linear-gradient(105deg,transparent 8%,#322e26a8 55%,#28231dec);transform:translateX(100%);transition:transform 1.5s ease}
+.scene-kill {z-index:3}
+.scene-img .rabbit-breath {transform-box:fill-box;transform-origin:center bottom;animation:breathe 2.2s ease-in-out infinite alternate}
+@keyframes breathe {to{transform:translateX(-4px) scale(1.02,1.045)}}
+.scene-page[data-phase="shadow"] .farm-shadow {transform:translateX(35%)}
+.scene-page[data-phase="still"] .farm-shadow {transform:translateX(9%)}
+.scene-page[data-phase="still"] svg {transform:scale(1.13);transform-origin:43% 60%}
+.scene-page:is([data-phase="still"],[data-phase="after"]) .rabbit-breath {animation-play-state:paused}
+.scene-page[data-phase="after"] .farm-shadow {transform:none;background:#332f2ae8}
+.scene-page[data-phase="after"] svg {opacity:.22}
+.scene-page[data-phase="after"] .kb,.scene-page[data-phase="after"] .arm {visibility:hidden}
+.scene-page .scene-caps {min-height:0;overflow:auto;align-self:stretch}
+.scene-page {grid-template-rows:minmax(0,.95fr) minmax(0,1fr) auto}
+.scene-page .scene-img {max-height:100%;align-self:center}
+@media(prefers-reduced-motion:reduce){
+ .scene-page *,.scene-page *::after {animation:none!important;transition:none!important}
+}
+
+[hidden],#app[hidden],#desk[hidden]{display:none!important}
+#desk{
+  position:fixed;inset:0;z-index:100;overflow:auto;display:flex;flex-direction:column;align-items:center;justify-content:safe center;
+  padding:40px 20px 66px;cursor:auto;color:#fff1d4;
+  background:linear-gradient(115deg,#ffe1a930,#8e572a13 42%,#30160875),
+    radial-gradient(ellipse at 44% 40%,#713e1822 20%,#2e180c91 100%),url("art/desk-wood.jpg") center / max(2000px,160vw) auto,#77573e;
+}
+.desk-caption{font:500 clamp(32px,4vw,58px)/1.1 'Caveat',cursive;margin:0 0 clamp(32px,6vh,65px);text-shadow:0 2px 5px #251509}
+.volumes{display:flex;align-items:center;justify-content:center;gap:clamp(35px,8vw,120px);width:100%;padding:12px}
+.volume{
+  --angle:-7deg;position:relative;isolation:isolate;display:block;width:clamp(220px,25vw,340px);aspect-ratio:.728;text-decoration:none;color:inherit;
+  transform:rotate(var(--angle));transition:transform .3s,box-shadow .3s;
+  border-radius:5px 15px 12px 4px;border:1px solid #352319;
+  box-shadow:1px 2px #8d7861,2px 4px #e3d1aa,3px 6px #8f826d,4px 8px #d9c8ae,5px 10px #472920,7px 16px 10px #210e095c,14px 27px 23px #210e0966;
+}
+.volume:hover,.volume:focus-visible{transform:translateY(-6px) rotate(calc(var(--angle) * .7))}
+.volume:focus-visible,.desk-back:focus-visible{outline:3px solid #ffe3a1;outline-offset:7px}
+.volume::before{content:'';position:absolute;inset:0 auto 0 0;width:8%;border-radius:4px 0 0 4px;background:linear-gradient(90deg,#0006,#fff1 31%,#0005 76%,#fff2 91%,transparent)}
+.diary-cover{
+  background:repeating-linear-gradient(4deg,#ffffff05 0 1px,transparent 1px 3px),repeating-linear-gradient(93deg,#0001 0 1px,transparent 1px 3px),linear-gradient(125deg,#713539,#4c2229 80%);
+  color:#e5cc99;
+}
+.diary-cover::after{content:'';position:absolute;top:100%;right:14%;height:26px;width:14px;background:#8b3442;clip-path:polygon(0 0,100% 0,100% 100%,50% 76%,0 100%)}
+.cover-frame{position:absolute;inset:5% 6% 5% 11%;border:1px solid #ceb1808c;outline:1px solid #ceb18040;outline-offset:-5px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cover-label{font:500 clamp(10px,.82vw,13px)/1.3 Georgia,serif;letter-spacing:.16em;text-transform:uppercase}
+.cover-frame strong{font:500 clamp(60px,6.3vw,92px)/1 'Caveat',cursive;margin:.15em 0 .04em}
+.cover-sketch{width:22%;height:auto;display:block}.cover-sketch svg,.house-sketch svg{width:100%;display:block;opacity:.9;filter:none}
+#desk .d path{stroke-dashoffset:0;animation:none}
+.cover-frame em,.note-label em{font:400 clamp(19px,2vw,26px)/1.2 'Caveat',cursive}
+.notes-cover{--angle:6deg;background:repeating-linear-gradient(1deg,transparent 0 3px,#fbf0d90a 3px 4px),repeating-linear-gradient(90deg,#101a171c 0 1px,transparent 1px 3px),linear-gradient(125deg,#667566,#3d5146);color:#343731}
+.note-label{position:absolute;top:16%;left:15%;right:10%;padding:8% 4% 6%;transform:rotate(-2deg);text-align:center;display:grid;gap:8px;background:repeating-linear-gradient(0deg,transparent 0 20px,#79909a30 20px 21px),#ebdfbf;box-shadow:0 2px 4px #1420196b}
+.note-label strong{font:600 clamp(32px,3.5vw,49px)/.94 'Caveat',cursive;color:#374742}
+.note-label em{font-size:clamp(15px,1.5vw,22px)}
+.house-sketch{position:absolute;right:15%;bottom:7%;width:22%;transform:rotate(7deg);opacity:.72}
+.desk-back{position:absolute;top:12px;left:12px;z-index:12;border:1px solid #aa9073;border-radius:20px;background:#2c221b;color:#fcf0da;padding:5px 14px;text-decoration:none;font:17px 'Caveat',Georgia,serif}
+body.notebook{--paper:#f3edda;--paper-alt:#ede4ca;--ink:#36493f;--hd:#526c5d;--grid:#72918825}
+body.notebook .sheet-content{overflow-y:auto;scrollbar-width:thin}
+@media(max-width:700px){
+  #desk{padding:25px 12px 50px}
+  .volumes{gap:6vw;padding:8px}
+  .volume{width:39vw}.desk-caption{margin-bottom:36px}
+  .cover-frame strong{font-size:10vw}.cover-label{font-size:clamp(8px,1.65vw,12px)}
+  .note-label{gap:5px}.note-label strong{font-size:6.1vw}.cover-frame em,.note-label em{font-size:3.3vw}
+  .desk-back{position:static;grid-row:1;justify-self:start;margin:4px 12px}
+  #app{grid-template-rows:auto minmax(0,1fr) auto}
+}
+@media(max-width:500px) and (min-height:650px){
+  .volumes{flex-direction:column;gap:30px}
+  .volume{width:min(45vw,21vh);min-width:144px}
+  .diary-cover{left:-9vw}.notes-cover{left:9vw}
+  .desk-caption{margin-bottom:18px}
+}
+@media(prefers-reduced-motion:reduce){.volume{transition:none}}

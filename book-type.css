@@ -1,0 +1,360 @@
+/* Типографика всех исходных текстовых блоков: дневник, материалы, сцены,
+   цитаты, заметки, выборы и хронология. Содержимое берётся из data.js/notes.js. */
+
+#reading .reading-layout article {
+  font-family: "Literata", Georgia, serif;
+  font-size: calc(var(--reading-size, 21px) * 1.075);
+  font-weight: 400;
+  line-height: 1.72;
+  font-optical-sizing: auto;
+  font-kerning: normal;
+}
+
+#reading .part-intro,
+#reading .keepsakes,
+#reading .entry,
+#reading .dates {
+  max-width: 74ch;
+}
+
+#reading .part-intro {
+  margin-bottom: 14px;
+  padding-top: 22px;
+  padding-bottom: 27px;
+}
+
+#reading .entry {
+  padding: 1.55em 0 1.85em;
+  border-bottom-color: #ccdad2;
+}
+
+#reading .entry > header {
+  margin: 0 0 1.2em;
+  padding-right: 54px;
+}
+
+#reading .entry > header > span {
+  display: block;
+  font-size: 12px;
+  letter-spacing: .15em;
+  color: #7b9996;
+}
+
+#reading .entry header h3 {
+  margin: .16em 0 .35em;
+  color: var(--accent);
+  font: 500 clamp(39px, 3.3vw, 54px)/1.05 "EB Garamond", Georgia, serif;
+  letter-spacing: -.035em;
+}
+
+#reading .entry > header::after {
+  content: "";
+  display: block;
+  width: 84px;
+  height: 2px;
+  margin: 13px 0 0;
+  background: linear-gradient(90deg, #b78b8f 0 42%, #d5dfd6 42%);
+}
+#reading.manuscript .entry > header::after {
+  background: linear-gradient(90deg, #7ba69b 0 42%, #d5dfd6 42%);
+}
+
+/* Основной литературный текст: ровная строка, крупный кегль, воздух. */
+#reading .entry p.prose {
+  margin: 0 0 1.28em;
+  padding: 0;
+  color: #37444a;
+  font: 400 1em/1.79 "Literata", Georgia, serif;
+  letter-spacing: -.013em;
+  text-align: left;
+  text-wrap: pretty;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+#reading .entry p.prose + p.prose {
+  text-indent: 1.35em;
+}
+
+/* Первая небольшая фраза становится тихим эпиграфом к главе. */
+#reading .entry p.prose--lead {
+  margin: .1em 0 1.65em;
+  padding: 0 0 0 1.05em;
+  color: #6f565b;
+  border-left: 3px solid #c49a9b;
+  font: italic 500 1.12em/1.58 "EB Garamond", Georgia, serif;
+  text-indent: 0;
+  letter-spacing: 0;
+}
+#reading.manuscript .entry p.prose--lead {
+  color: #4f7770;
+  border-left-color: #92b7ad;
+}
+#reading .entry p.prose--lead + p.prose { text-indent: 0; }
+
+/* В длинном вступительном абзаце — настоящий книжный буквенный инициал. */
+#reading .entry p.prose--opening {
+  margin-top: .12em;
+  text-indent: 0;
+}
+#reading .entry p.prose--opening::first-letter {
+  float: left;
+  padding: .09em .14em 0 0;
+  color: var(--accent);
+  font: 500 3.75em/.77 "EB Garamond", Georgia, serif;
+  text-shadow: 1px 1px 0 #e6d5c6;
+}
+
+/* Подсветка авторских {{фрагментов}} остаётся в исходных местах. */
+#reading .entry mark.hl {
+  padding: 0 .09em;
+  color: inherit;
+  background: linear-gradient(transparent 59%, #e6d5aa88 59% 92%, transparent 92%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+#reading .entry s.sx { color: #7c6670; }
+
+/* Часть вторая, отдельные выдержки и эмоциональные фразы. */
+#reading .entry p.q,
+#reading .entry p.quote,
+#reading .entry blockquote {
+  max-width: 63ch;
+  margin: 1.6em 0 1.7em !important;
+  padding: 1em 1.3em !important;
+  color: #78525e;
+  background: linear-gradient(100deg, #f5e8e5, #f9f1ed);
+  border: 0;
+  border-left: 3px solid #ad7887;
+  border-radius: 0 5px 5px 0;
+  box-shadow: none;
+  transform: none;
+  rotate: 0deg;
+  text-align: left;
+  font: italic 500 1.12em/1.57 "EB Garamond", Georgia, serif;
+}
+#reading .entry p.q::before,
+#reading .entry p.q::after { color: #b08b91; opacity: .6; }
+
+/* Рабочие материалы: у каждого типа записи свой спокойный смысловой вид. */
+#reading .entry h4 {
+  margin: 1.85em 0 .62em;
+  padding: 0 0 .35em;
+  color: #4a746e;
+  border-bottom: 1px solid #d0dfd9;
+  font: 500 1.42em/1.25 "EB Garamond", Georgia, serif;
+  letter-spacing: -.015em;
+}
+#reading .entry h4:first-of-type { margin-top: .4em; }
+
+#reading .entry p.rubric {
+  margin: .2em 0 .9em;
+  padding: 0 0 4px;
+  color: #5b8980;
+  border: 0;
+  border-bottom: 1px solid #a2c6b9;
+  background: transparent;
+  font: 600 12px/1.3 system-ui, sans-serif;
+  letter-spacing: .16em;
+}
+
+#reading .entry p.date {
+  margin: 0 0 1.3em;
+  color: #9d6069;
+  font: 500 1.22em/1.3 "Caveat", cursive;
+}
+
+#reading .entry p.annotation,
+#reading .entry p.stage,
+#reading .entry p.outcome {
+  margin: .85em 0 1.15em;
+  padding: 13px 19px;
+  border: 0;
+  border-left: 3px solid #8cb3ab;
+  border-radius: 0 4px 4px 0;
+  background: #eaf3ed;
+  color: #446c64;
+  font: 500 1.02em/1.48 "Caveat", cursive;
+  text-align: left;
+  transform: none;
+}
+#reading .entry p.stage {
+  margin-left: 1.5em;
+  padding: 5px 0 6px 14px;
+  background: transparent;
+  color: #6e8580;
+  font-style: italic;
+  border-left-style: dotted;
+}
+#reading .entry p.outcome {
+  background: #e0ede4;
+  border-left-color: #648d7d;
+  color: #3b685d;
+}
+
+#reading .entry p.choice {
+  display: block;
+  margin: .4em 0;
+  padding: .85em 1.05em;
+  border: 1px solid #c5d9d4;
+  border-left: 4px solid #73a398;
+  border-radius: 4px;
+  background: #f5faf3;
+  color: #3a5452;
+  font: 400 .94em/1.65 "Literata", Georgia, serif;
+  text-indent: 0;
+}
+#reading .entry p.choice b { color: #54877d; font-size: .95em; }
+#reading .entry p.choice:hover { background: #eaf4ec; }
+
+#reading .entry p.item {
+  position: relative;
+  margin: .3em 0 .6em;
+  padding: 0 0 0 1.4em;
+  border: 0;
+  background: transparent;
+  color: #43515a;
+  font: 400 .96em/1.6 "Literata", Georgia, serif;
+}
+#reading .entry p.item::before {
+  color: #80a99f;
+  font-size: 1.2em;
+}
+
+#reading .entry p.day {
+  margin: 1.35em 0 .5em;
+  color: #547f75;
+  font: 600 1.15em/1.35 "EB Garamond", Georgia, serif;
+}
+
+/* Хронологию читают по годам, а не как случайный набор строк. */
+#reading .entry--note2 p.year,
+#reading .entry p.year {
+  position: relative;
+  margin: 0 0 0 12px;
+  padding: 13px 15px 13px 25px;
+  border: 0;
+  border-left: 2px solid #a3c2b8;
+  background: transparent;
+  color: #43545a;
+  font: 500 .98em/1.55 "Literata", Georgia, serif;
+}
+#reading .entry p.year::before {
+  content: "";
+  position: absolute;
+  top: 1.45em;
+  left: -6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #6a9a8d;
+  box-shadow: 0 0 0 3px #fff9ee;
+}
+#reading .entry p.year b { color: #567d74; font-weight: 600; }
+
+#reading .entry ul {
+  margin: 1.1em 0 1.5em;
+  padding-left: 1.4em;
+  font: 400 .98em/1.7 "Literata", Georgia, serif;
+}
+#reading .entry li { margin-bottom: .45em; padding-left: .2em; }
+#reading .entry li::marker { color: #83a99d; }
+
+/* Особые материалы — самостоятельные читабельные фрагменты. */
+#reading .berry-branches {
+  max-width: 70ch;
+  margin: 1.9em 0;
+  padding: 24px;
+  background: #f9eeec;
+  border: 1px solid #e0c9c9;
+  border-left: 4px solid #b87887;
+  box-shadow: none;
+}
+#reading .berry-branches h4 {
+  color: #914d60;
+  font: 500 1.35em/1.2 "EB Garamond", Georgia, serif;
+}
+#reading .berry-branches details {
+  margin: 8px 0;
+  border: 1px solid #e9d9d5;
+  background: #fffaf4;
+  font-family: "Literata", Georgia, serif;
+}
+#reading .berry-branches summary {
+  font: 500 .95em/1.5 "Literata", Georgia, serif;
+  color: #895662;
+}
+#reading .berry-branches details p {
+  font: 400 .94em/1.65 "Literata", Georgia, serif;
+}
+
+#reading .entry .scene-page {
+  max-width: 70ch;
+  margin: 1.8em 0;
+  border: 1px solid #9abbb5;
+  border-radius: 4px;
+  background: #e6f0eb;
+  box-shadow: 5px 7px 0 #799fa133;
+}
+#reading .scene-page .scene-caps {
+  color: #3d5355;
+  font: 400 .95em/1.65 "Literata", Georgia, serif;
+}
+#reading .scene-page .cap { font-family: inherit; font-size: 1em; }
+#reading .scene-page button { color: #335e5b; }
+
+#reading .secret {
+  max-width: 69ch;
+  margin: 2em 0;
+  padding: 20px 24px;
+  border: 1px solid #d3bbc0;
+  border-left: 4px solid #ad7886;
+  background: #f6eae8;
+  box-shadow: none;
+}
+#reading .secret h3 {
+  margin-bottom: .65em;
+  color: #955464;
+  font: 500 1.5em/1.2 "EB Garamond", Georgia, serif;
+}
+#reading .secret .veil p {
+  font: 400 .93em/1.7 "Literata", Georgia, serif !important;
+  margin-bottom: .75em !important;
+}
+
+#reading .dates {
+  margin: 2.6em 0 0;
+  padding: 2em 0 4em;
+  border-top: 2px solid #b9d0c7;
+}
+#reading .dates .chapter-head { text-align: left; }
+#reading .dates .chapter-head h2 {
+  color: #4c7e74;
+  font: 500 2.15em/1.15 "EB Garamond", Georgia, serif;
+}
+#reading .dates > div[style] {
+  padding: 13px 0 !important;
+  border-bottom: 1px solid #d3e0d7 !important;
+  font-size: .95em !important;
+}
+#reading .dates > div[style] b { color: #668e82 !important; font-size: 1.3em !important; }
+
+@media (max-width: 790px) {
+  #reading .reading-layout article { font-size: calc(var(--reading-size, 21px) * 1.035); }
+  #reading .entry { padding-top: 1.2em; padding-bottom: 1.45em; }
+  #reading .entry header h3 { font-size: clamp(34px, 7.7vw, 48px); }
+  #reading .entry p.prose { line-height: 1.72; }
+  #reading .entry p.prose--opening::first-letter { font-size: 3.25em; }
+}
+
+@media (max-width: 470px) {
+  #reading .reading-layout article { font-size: var(--reading-size, 21px); }
+  #reading .entry p.prose { font-size: 1em; line-height: 1.7; }
+  #reading .entry p.prose--opening::first-letter { font-size: 3em; }
+  #reading .entry p.prose--lead { font-size: 1.08em; }
+  #reading .entry h4 { font-size: 1.27em; }
+  #reading .entry .quote, #reading .entry .q, #reading .entry blockquote { padding-inline: .85em !important; }
+  #reading .entry p.stage { margin-left: 0; }
+  #reading .berry-branches { padding: 15px; }
+  #reading .secret { padding: 14px 16px; }
+}

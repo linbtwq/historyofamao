@@ -1,0 +1,320 @@
+/* Размеры и осмысленный ритм чтения. Данные и порядок глав не затрагиваются. */
+
+#reading .reading-layout article {
+  font-size: calc(var(--reading-size, 21px) * 1.03);
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+}
+
+#reading .entry,
+#reading .keepsakes,
+#reading .part-intro,
+#reading .dates { max-width: 68ch; }
+
+#reading .entry p.prose {
+  max-width: 65ch;
+  margin-bottom: 1.14em;
+  color: #34434a;
+  line-height: 1.74;
+  letter-spacing: -.004em;
+  text-align: left;
+  text-wrap: pretty;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Абзацы отделяет воздух, а не одновременно отступ и пустая строка. */
+#reading .entry p.prose + p.prose { text-indent: 0; }
+#reading .entry p.prose--opening::first-letter {
+  padding: .105em .13em 0 0;
+  font-size: 3.25em;
+  line-height: .78;
+}
+
+#reading .entry p.prose--lead {
+  max-width: 56ch;
+  margin-top: .15em;
+  margin-bottom: 1.38em;
+  padding-left: .9em;
+  font-size: 1.085em;
+  line-height: 1.58;
+}
+
+#reading .entry header h3,
+#reading .part-intro h2 { text-wrap: balance; }
+
+#reading .entry p.choice,
+#reading .entry p.year,
+#reading .entry p.item,
+#reading .entry .berry-branches,
+#reading .entry blockquote { overflow-wrap: break-word; }
+
+#reading .entry .quote,
+#reading .entry .q,
+#reading .entry blockquote {
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+/* Главная на телефоне — настоящий нарисованный стол и две обложки,
+   без всплывающих панелей или дополнительных кнопок. */
+@media (max-width: 760px), (max-aspect-ratio: 3/4) {
+  #desk { background: #426776; }
+  #desk .home-artboard {
+    inset: 0;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    transform: none;
+    background: url("assets/mobile-desk.png") center / cover no-repeat, #476f7c;
+    container-type: inline-size;
+  }
+  #desk .desk-caption {
+    top: clamp(32px, 7dvh, 78px);
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 8px;
+    font-size: clamp(42px, 8.7vw, 72px);
+    line-height: 1.14;
+    color: #fff1d6;
+    text-shadow: 0 2px 4px #1d3444b0, 0 0 26px #173d4f8f;
+    white-space: nowrap;
+  }
+  #desk .volumes {
+    top: 33%;
+    right: 4%;
+    bottom: auto;
+    left: 4%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(14px, 5vw, 36px);
+    width: 92%;
+    height: auto;
+    padding: 0;
+  }
+  #desk .volume {
+    position: relative;
+    inset: auto;
+    isolation: isolate;
+    width: min(38vw, 235px, 35dvh);
+    height: auto;
+    flex: 0 0 auto;
+    aspect-ratio: .74;
+    border: 1px solid #392f2b !important;
+    border-radius: 5px 10px 9px 4px;
+    box-shadow: 2px 2px 0 #e3d6bb, 4px 5px 0 #b7ab99,
+                8px 13px 15px #142c3a70, 13px 21px 28px #0b1f2755 !important;
+    text-decoration: none;
+    transform-origin: center;
+  }
+  #desk .diary-cover {
+    background: repeating-linear-gradient(12deg, transparent 0 3px, #e9b1a508 3px 4px),
+      linear-gradient(110deg, #864c54, #653740 33%, #4f2b35 100%) !important;
+    transform: rotate(-6deg) !important;
+  }
+  #desk .notes-cover {
+    background: repeating-linear-gradient(10deg, transparent 0 4px, #e4f2e208 4px 5px),
+      linear-gradient(110deg, #72867a, #526b62 36%, #344e4b 100%) !important;
+    transform: rotate(5deg) !important;
+  }
+  #desk .volume::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 5.5% 6.8%;
+    width: auto;
+    border: 1px solid #e5c79c6b;
+    border-radius: 0;
+    background: transparent;
+  }
+  #desk .volume::after {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 7%;
+    height: auto;
+    background: linear-gradient(90deg,#291e2490,#f4e1c322 43%,#1c242d55);
+    border-radius: 3px 0 0 3px;
+    clip-path: none;
+  }
+  #desk .cover-frame,
+  #desk .note-label { inset: 13% 8% 12% 11%; gap: 12px; }
+  #desk .cover-frame { justify-content: center; }
+  #desk .cover-label {
+    font-size: clamp(9px, 1.45vw, 13px);
+    color: #f4dcb8;
+    letter-spacing: .11em;
+  }
+  #desk .cover-frame strong {
+    margin: 0;
+    font-size: clamp(36px, 7vw, 61px);
+    color: #ffe1ab;
+  }
+  #desk .cover-frame em,
+  #desk .note-label em { font-size: clamp(15px, 2.4vw, 22px); }
+  #desk .cover-sketch { width: 22%; margin: 0; }
+  #desk .note-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  #desk .note-label strong {
+    font-size: clamp(24px, 4vw, 43px);
+    line-height: 1.05;
+    color: #f4e7c4;
+  }
+  #desk .note-label em,
+  #desk .note-label .cover-label { color: #e9dcb9; }
+  #desk .volume:focus-visible { outline: 3px solid #fff0c3; outline-offset: 7px; }
+}
+
+@media (max-width: 470px) and (min-height: 571px) {
+  #desk .desk-caption { top: clamp(30px, 6dvh, 61px); font-size: clamp(40px, 10.2vw, 58px); }
+  #desk .volumes {
+    top: clamp(126px, 20dvh, 180px);
+    flex-direction: column;
+    gap: clamp(13px, 2.3dvh, 23px);
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+  #desk .volume {
+    width: min(54vw, 215px, 24dvh);
+    flex-basis: auto;
+  }
+  #desk .diary-cover { margin-left: -7vw; }
+  #desk .notes-cover { margin-left: 7vw; }
+  #desk .cover-label { font-size: clamp(9px, 2.4vw, 12px); }
+  #desk .cover-frame strong { font-size: clamp(33px, 6.6dvh, 57px); }
+  #desk .note-label strong { font-size: clamp(25px, 4.8dvh, 39px); }
+  #desk .cover-frame em,
+  #desk .note-label em { font-size: clamp(14px, 2.7dvh, 21px); }
+}
+
+@media (max-width: 900px) and (max-height: 570px) {
+  #desk .desk-caption { top: 12px; font-size: clamp(34px, 7dvh, 54px); }
+  #desk .volumes {
+    top: 31%;
+    flex-direction: row;
+    gap: clamp(20px, 5vw, 50px);
+  }
+  #desk .volume { width: min(28vw, 32dvh, 170px); }
+}
+
+/* Узкая читалка: раскрывающееся оглавление, затем ровная бумажная страница. */
+@media (max-width: 790px) {
+  #reading .reader-bar {
+    min-height: 58px;
+    padding: 8px max(15px, env(safe-area-inset-right)) 8px max(15px, env(safe-area-inset-left));
+    gap: 9px;
+  }
+  #reading .reader-bar a { font-size: 16px; white-space: nowrap; }
+  #reading .reader-bar b {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: clamp(20px, 5.5vw, 28px);
+    white-space: nowrap;
+  }
+  #reading .reader-bar button { min-width: 45px; min-height: 44px; }
+  #reading .reading-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  #reading .reading-layout aside,
+  #reading.manuscript .reading-layout aside {
+    display: block;
+    position: relative;
+    top: 0;
+    align-self: auto;
+    overflow: visible;
+    width: 100%;
+    max-height: none;
+    padding: 0;
+    background: #e7f0e8;
+    border-right: 0;
+    border-bottom: 1px solid #b9d0c7;
+    border-radius: 0;
+  }
+  #reading .reader-index .index-ident { display: none; }
+  #reading .contents { padding: 0; }
+  #reading .contents summary {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+    gap: 12px;
+    padding: 10px 21px;
+    background: #e7f0e8;
+    color: #385d5a;
+    font: 500 22px/1.3 "EB Garamond", Georgia, serif;
+  }
+  #reading .contents summary small { margin-left: auto; font-size: 11px; }
+  #reading .contents[open] {
+    max-height: min(65dvh, 680px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #reading .contents[open] summary { position: sticky; top: 0; z-index: 2; box-shadow: 0 1px 0 #bcd1c9; }
+  #reading .toc-search { margin: 12px 20px 16px; }
+  #reading .toc-groups { padding: 0 20px 14px; }
+  #reading .toc-group nav a { min-height: 44px; font-size: 18px; padding-block: 10px; }
+  #reading .sheets-link {
+    display: inline-block;
+    margin: 0 20px 14px;
+    padding: 2px 0;
+    border: 0;
+    font-size: 16px;
+    white-space: normal;
+  }
+  #reading .reading-layout article {
+    min-height: 70dvh;
+    padding: 24px clamp(18px, 5.5vw, 36px) max(74px, env(safe-area-inset-bottom));
+    border-radius: 0;
+    background: #fff9ee;
+    font-size: calc(var(--reading-size, 21px) * 1.0);
+  }
+  #reading .entry,
+  #reading .part-intro,
+  #reading .keepsakes { max-width: none; }
+  #reading .entry { padding-top: 1.2em; padding-bottom: 1.35em; scroll-margin-top: 70px; }
+  #reading .part-intro { padding: 16px 65px 22px 0; }
+  #reading .part-intro h2 { font-size: clamp(41px, 7.1vw, 58px); }
+  #reading .entry > header { padding-right: 30px; }
+  #reading .entry header h3 { font-size: clamp(35px, 7.4vw, 46px); }
+  #reading .entry p.prose { max-width: none; line-height: 1.69; }
+  #reading .entry p.prose--opening::first-letter { font-size: 2.9em; }
+  #reading .entry p.prose--lead { max-width: none; }
+  #reading .entry .choice { min-height: 44px; }
+  #reading .keepsakes { justify-content: flex-start; gap: 10px 18px; margin-bottom: 19px; }
+  #reading .keepsakes a { flex: 0 1 auto; flex-direction: row; font-size: 18px; text-align: left; }
+  #reading .keepsakes img { width: 21px; height: 24px; }
+}
+
+@media (max-width: 390px) {
+  #reading .reading-layout article { padding-inline: 17px; }
+  #reading .part-intro h2 { font-size: 40px; }
+  #reading .entry header h3 { font-size: 34px; }
+  #reading .entry p.prose { line-height: 1.68; }
+  #reading .entry .q,
+  #reading .entry .quote,
+  #reading .entry blockquote { padding-inline: .75em !important; }
+}
